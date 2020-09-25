@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+        
+        <beans>
+         <bean id="config" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="Jdbc:MySql://localhost:3306/springh"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="root"></property>
+        </bean>
+       
+       <bean id="sf" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+       <property name="dataSource" ref="config"></property>
+       
+       <property name="mappingResources">
+       <list>
+       <value>student.xml</value>
+       </list>
+       </property>
+       
+       <property name="hibernateProperties">
+       <props>
+       <prop key="hibernate.show_sql">true</prop>
+       <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+       <prop key="hibernate.hbm2ddl.auto">auto</prop>
+       </props>
+       </property>
+       </bean>
+       <bean id="htobj" class="org.springframework.orm.hibernate3.HibernateTemplate">
+       <property name="sessionFactory" ref="sf"></property>
+       </bean>
+       
+       <bean id="hto" class="com.hib.InsertData">
+       <property name="ht">
+       <ref bean="htobj"></ref>
+       </property>
+       </bean>
+       
+        </beans>
